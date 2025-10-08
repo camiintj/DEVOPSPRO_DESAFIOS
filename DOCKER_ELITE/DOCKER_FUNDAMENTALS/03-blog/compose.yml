@@ -1,0 +1,45 @@
+services:
+  #Configuração do banco de dados MySQL
+  db:
+    image: mysql:latest
+    container_name: wordpress_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: docker_pwd
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: docker_usr
+      MYSQL_PASSWORD: docker_pwd
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - wordpress_network
+
+  #WordPress
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress_app
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306 #Nome do serviço do banco de dados e porta
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: docker_usr
+      WORDPRESS_DB_PASSWORD: docker_pwd
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - wordpress_network
+
+#Volumes 
+volumes:
+  db_data:
+  wordpress_data:
+ 
+
+#Rede para comunicação do wordpress com o banco de dados
+networks:
+  wordpress_network:
+    driver: bridge
