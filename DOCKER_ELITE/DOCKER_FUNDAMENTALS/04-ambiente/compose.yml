@@ -1,0 +1,38 @@
+services:
+
+  db:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: kubedevnews
+      POSTGRES_PASSWORD: Pg#123
+      POSTGRES_DB: kubedevnews
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - kubenews_network
+
+  db_explorer:
+    image: elestio/pgadmin:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: camilacampanaro@gmail.com 
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8081:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - kubenews_network
+
+volumes:
+  db-data:
+  pgadmin-data:
+
+networks:
+  kubenews_network:
+    driver: bridge
