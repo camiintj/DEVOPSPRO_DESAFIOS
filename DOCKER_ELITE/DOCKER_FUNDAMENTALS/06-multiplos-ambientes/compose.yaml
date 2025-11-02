@@ -39,4 +39,4 @@ volumes:
 
   #comandos:
   # ambiente dev (porta 5001):      docker compose --env-file .dev.env up 
-  # ambiente homolog (porta 5001):  docker compose --env-file .homolog.env up 
+  # ambiente homolog (porta 5002):  docker compose --env-file .homolog.env up 
