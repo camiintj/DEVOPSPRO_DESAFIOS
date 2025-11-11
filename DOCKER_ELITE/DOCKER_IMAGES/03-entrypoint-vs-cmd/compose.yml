@@ -1,0 +1,10 @@
+
+services:
+  converter:
+    build: .
+    volumes:
+      - ./videos:/app/videos
+    working_dir: /app
+  
+    #definido volume para mapear a pasta local videos com a pasta /app/videos no container, para fins de teste
+    #adicionei um video mp4 na pasta videos para testar a conversão, o resultado consta no print
